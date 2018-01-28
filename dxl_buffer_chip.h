@@ -29,6 +29,9 @@ class DynamixelClass {
     void setGoalVelocity(unsigned char ID, unsigned int vel);         //### Set the goal velocity for each servo
     void setProfileAcceleration(unsigned char ID, unsigned int pac);  //### Set the profile acc. for each servo (max. is 32767)
     void setProfileVelocity(unsigned char ID, unsigned int pvl);      //### Set the profile velocity for each servo (max. is 1023)
+    int getPositionSteps(unsigned char ID);                           //### Get position for servos in steps
+    float getPositionDegrees(unsigned char ID);                       //### Get position for servos in degrees 
+    float getLoad(unsigned char ID);                                  //### Get load on servos in maximum procent
     unsigned int writePacket(unsigned char ID, unsigned short addr, unsigned char *arr, int n);  //### write packet instruction
 
   private:
