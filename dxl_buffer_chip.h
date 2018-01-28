@@ -40,6 +40,5 @@ class DynamixelClass {
     void transmitPacket(int transLen);        //### Send packet to dynamixel
     void readReturnPacket(void);              //### Read return packet from dynamixel
     void clearBuffer(void);                   //### Clear RX buffer
-    void getParameters(void);                 //### Get parameter packet from dynamixel
 };
 #endif
