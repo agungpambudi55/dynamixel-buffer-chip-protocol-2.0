@@ -107,6 +107,23 @@ unsigned int DynamixelClass::writePacket(unsigned char ID, unsigned short addr, 
   return 0;
 }
 
+void DynamixelClass::readPacket(unsigned char ID, unsigned short addr, int n){
+  n += 3;
+
+  instructionPacket[0] = ID;                     //### ID
+  instructionPacket[1] = (n & 0xFF);             //### Length of packet
+  instructionPacket[2] = (n & 0xFF00) >> 8;      //### Length of packet
+  instructionPacket[3] = 0x02;                   //### Instruction
+  instructionPacket[4] = (addr & 0xFF);          //### Address
+  instructionPacket[5] = (addr & 0xFF00) >> 8;   //### Address
+  instructionPacket[6] = ((n-3) & 0xFF);         //### Data length
+  instructionPacket[7] = ((n-3) & 0xFF00) >> 8;  //### Data length
+
+  clearBuffer();
+  transmitPacket(n);
+  readReturnPacket();
+}
+
 //############################################################################################################# PRIVATE METHODS #####
 void DynamixelClass::transmitPacket(int transmit_length){         //### Transmit instruction packet to Dynamixel
   if (pinDataControl > -1){ digitalWrite(pinDataControl,HIGH); }  //### Set TX Buffer pin to HIGH
