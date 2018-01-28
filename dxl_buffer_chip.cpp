@@ -150,6 +150,16 @@ void DynamixelClass::transmitPacket(int transmit_length){         //### Transmit
   delay(20);
 }
 
+void DynamixelClass::readReturnPacket(void){
+  int i = 0;
+  
+  while(_serial->available() > 0){        //### Read information when available
+    int incomingbyte = _serial->read();   //### Save incomingbyte
+    returnPacket[i] = incomingbyte;       //### Save data in return packet array
+    i++;
+  }
+}
+
 void DynamixelClass::clearBuffer(void){  while (_serial->read() != -1); }  //### Clear RX buffer;
 
 unsigned short DynamixelClass::updateCrc(unsigned char *dataBlkPtr, unsigned short dataBlkSize) {
