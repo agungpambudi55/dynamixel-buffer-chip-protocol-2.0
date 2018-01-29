@@ -33,6 +33,7 @@ class DynamixelClass {
     float getPositionDegrees(unsigned char ID);                       //### Get position for servos in degrees 
     float getLoad(unsigned char ID);                                  //### Get load on servos in maximum procent
     unsigned int writePacket(unsigned char ID, unsigned short addr, unsigned char *arr, int n);  //### write packet instruction
+    void readPacket(unsigned char ID, unsigned short addr, int n);    //### read packet instruction
 
   private:
     char pinDataControl;                      //### Pin to control TX/RX buffer chip
