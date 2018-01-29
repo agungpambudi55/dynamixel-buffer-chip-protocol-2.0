@@ -89,6 +89,19 @@ void DynamixelClass::setGoalVelocity(unsigned char ID, unsigned int vel){
   writePacket(ID, 0x68, arr, 4);
 }
 
+void DynamixelClass::getParameters(void){
+  int j = 0;
+  
+  for(int i = 0; i < 100; i++){   
+    if(returnPacket[i] == 0x55 && returnPacket[i-1] == 0 && returnPacket[i+1] == 0){ //### Filter parameters from return packet
+      data[j] = returnPacket[i-3];       //### Saving ID
+      data[j+1] = returnPacket[i+2];     //### Saving parameter bytes
+      data[j+2] = returnPacket[i+3];     //### Saving parameter bytes    
+      j += 3;
+    }
+  }
+}
+
 unsigned int DynamixelClass::writePacket(unsigned char ID, unsigned short addr, unsigned char *arr, int n){
   n += 5;
 
