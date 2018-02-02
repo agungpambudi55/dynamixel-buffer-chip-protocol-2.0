@@ -102,6 +102,28 @@ void DynamixelClass::getParameters(void){
   }
 }
 
+int DynamixelClass::getPositionSteps(unsigned char ID){
+  clearBuffer();
+  
+  readPacket(ID, 0x84, 4);                    //### Read from adress 0x84 (Present Position), byte size 4
+  getParameters();                            //### Filters parameters from return packet
+  
+  return (int)((data[2] << 8) | data[1]);     //### Converting two information bytes into a integer (position data)
+}
+
+float DynamixelClass::getPositionDegrees(unsigned char ID){ //### Converting from raw data to degrees (360/4095)
+  return (float)(getPositionSteps(ID) * 0.088);
+}
+
+float DynamixelClass::getLoad(unsigned char ID){
+  clearBuffer();
+  
+  readPacket(ID, 0x7E, 4);                    //### Read from adress 0x7E (Present Load), byte size 4 (should be 2?)
+  getParameters();                            //### Filters parameters from returnPacket
+
+  return (float)(((data[2] << 8) | data[1])/10);  //### Converting two information bytes into a float, then load to percentage
+}
+
 unsigned int DynamixelClass::writePacket(unsigned char ID, unsigned short addr, unsigned char *arr, int n){
   n += 5;
 
