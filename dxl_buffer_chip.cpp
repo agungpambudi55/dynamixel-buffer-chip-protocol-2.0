@@ -4,7 +4,15 @@
   Agung Pambudi <agung.pambudi5595@gmail.com>
   Note :
     Created on Oct 2017
+    Modified on Jan 2018
 */
+
+// ########################################################################################## PROTOCOL 2.0 - PACKET INSTRUCTION #####
+// [ff][ff][fd][00][id][len1][len2] { [instr][params(parameterDataSize)][crc1][crc2] }
+
+// ################################################################################################# CHECKSUM (CRC) CALCULATION #####
+// Polynomial : X^16 + X^15 + X^2 + 1 (polynomial representation : 0x8005)
+// Initial Value : 0
 
 #include "dxl_buffer_chip.h"
 
